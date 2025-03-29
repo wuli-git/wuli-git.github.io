@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2025-03-28-my-first-blog.md",
+                "file": "2025-3-28-wuli's-first-blog.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-03-28-my-first-blog"
+              "title": "2025-3-28-wuli's-first-blog"
             }
           }
         ]
@@ -184,9 +184,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "7d9a3ae1458335b5",
+  "active": "5e850346f193d61b",
   "lastOpenFiles": [
-    "欢迎.md",
-    "2025-03-28-my-first-blog.md"
+    "2025-03-28-my-first-blog.md",
+    "2018-07-01-welcome.md",
+    "欢迎.md"
   ]
 }
