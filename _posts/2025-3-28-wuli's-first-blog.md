@@ -1,6 +1,6 @@
 ---
 layout: article
-title: ”this is my first blog“
+title: this is my first blog
 ---
 # blog 大标题
 #### 小标题

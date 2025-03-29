@@ -1,7 +1,5 @@
 ---
 layout: article
-tags:
-  - TeXt
 title: abot how to do ladder over wall
 ---
 # 关于搭梯子翻墙
