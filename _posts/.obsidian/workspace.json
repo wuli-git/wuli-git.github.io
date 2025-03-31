@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "2025-3-30-ladder-over-wall"
             }
+          },
+          {
+            "id": "1e8ee664639d6019",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-3-31-利用github-pages搭建个人博客系统.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-3-31-利用github-pages搭建个人博客系统"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "db1f9bdc07fd1abe",
@@ -184,12 +199,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "5e850346f193d61b",
+  "active": "1e8ee664639d6019",
   "lastOpenFiles": [
-    "2025-3-28-wuli's-first-blog.md",
+    "2025-3-31-内网穿透.md",
+    "2025-3-31-利用github-pages搭建个人博客系统.md",
     "2025-3-30-ladder-over-wall.md",
-    "2018-07-01-welcome.md",
     "2018-06-01-header-image.md",
+    "2018-07-01-welcome.md",
+    "2025-3-28-wuli's-first-blog.md",
     "2025-03-28-my-first-blog.md",
     "欢迎.md"
   ]
