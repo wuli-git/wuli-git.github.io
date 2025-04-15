@@ -48,6 +48,14 @@ deploy:
 
 部署成功后，通过`https://username.github.io`即可访问个人博客网站。
 
+### 部署到 GitHub Pages
+
+- 将项目文件添加到 Git 暂存区，执行git add .。
+- 提交更改，执行git commit -m "Initial commit"。
+- 将代码推送到 GitHub 仓库，执行git push -u origin main。
+- 进入 GitHub 仓库的Settings页面，找到Pages选项，在Source中选择main分支，点击Save。等待片刻后，通过（）[https://username.github.io即可访问个人博客网站]。
+- 如果想要绑定自定义域名，可在设置域名解析后，在 GitHub Pages 的Custom domain输入框中输入域名并保存，同时更新_config.yml文件中的url配置
+
 ### 1.3how to
 
 - 1.在要上传的_post目录右键打开open git bash here,
