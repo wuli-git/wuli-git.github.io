@@ -48,7 +48,7 @@ deploy:
 
 部署成功后，通过`https://username.github.io`即可访问个人博客网站。
 
-### 部署到 GitHub Pages
+### 7.部署到 GitHub Pages
 
 - 将项目文件添加到 Git 暂存区，执行git add .。
 - 提交更改，执行git commit -m "Initial commit"。
