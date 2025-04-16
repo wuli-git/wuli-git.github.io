@@ -53,7 +53,7 @@ Q.size();
 
 ```
 
-## 4.unordered_set()
+## 4.unordered_set()()(哈希集合，后文有更详细介绍)
 
 ```cpp
 #include <unordered_set>
@@ -112,5 +112,169 @@ pq.push(2);
 while(!pq.empty()){
     cout<<pq.top()<<endl;
     pq.pop();//弹出
+}
+```
+
+## 8.哈希表和哈希集合
+
+- 哈希表：散列表，键值对，key:value;通过哈希函数将key转化为数组的索引，再把value存在那个索引上
+
+```plaintext
+// 哈希表伪码逻辑
+class MyHashMap {
+
+private:
+    vector<void*> table;
+
+public:
+    // 增/改，复杂度 O(1)
+    void put(auto key, auto value) {
+        int index = hash(key);
+        table[index] = value;
+    }
+
+    // 查，复杂度 O(1)
+    auto get(auto key) {
+        int index = hash(key);
+        return table[index];
+    }
+
+    // 删，复杂度 O(1)
+    void remove(auto key) {
+        int index = hash(key);
+        table[index] = nullptr;
+    }
+
+private:
+    // 哈希函数，把 key 转化成 table 中的合法索引
+    // 时间复杂度必须是 O(1)，才能保证上述方法的复杂度都是 O(1)
+    int hash(auto key) {
+        // ...
+    }
+};
+```
+
+##### 哈希函数
+
+- 1.int hashCode()会返回该对象全局的内存地址
+- 哈希冲突:出现了不同的key映射到同一个地址上；
+- (1)拉链法:拉链法相当于是哈希表的底层数组并不直接存储 value 类型，而是存储一个链表，当有多个不同的 key 映射到了同一个索引上，这些 key -> value 对儿就存储在这个链表中，这样就能解决哈希冲突的问题。
+- (2)而线性探查法的思路是，一个 key 发现算出来的 index 值已经被别的 key 占了，那么它就去 index + 1 的位置看看，如果还是被占了，就继续往后找，直到找到一个空的位置为止
+
+### 哈希集合unordered_set
+
+- 实质就是哈希表的键，只有key然后去对照数组的索引
+
+```cpp
+#include <unordered_set>
+using namespace std;
+unordered_set<int>set;
+for(int i:shuzu){
+    set.insert(i);//插入操作
+}
+for(const auto&element:set){
+    cout<<element<<endl;//遍历
+}
+auto it=set.find(20);
+if(it!=set.end()){
+    return true;
+}else{
+    return false;//查找
+}
+```
+
+- 例题：通过哈希表来给出一个数组a中每个数字出现了几次，将数字为key直接为unorder_set的索引，出现次数为value
+
+```cpp
+vector<int>hash;
+//memset(hash,0,sizeof(hash));//这是不正确的
+fill(hash.begin(),hash.end(),0);//初始化
+for(int i=0;i<a.size();i++){
+    hash[a[i]]++;
+}
+for(int i=0;i<hash.size();i++){
+    cout<<i<<"<<"<<hash[i];//输出每一个值以及出现了几次
+}
+```
+
+## 9并查集fa[N]
+
+- 作用:并查集可以高效的对元素进行分组（合并在一起），并且能快速的查询两个元素是否属于同一组。
+
+- 并查集是一种树状结构，一个集合有一个根节点，以后每加入的元素其都会连接到这个树结构上，判断链各个元素是否在一个集合，找其父节点最终找到其根节点，看是不是同一个
+
+```cpp
+int fa[N];
+for(int i=0;i<N;i++){
+    fa[i]=i;//初始化并查集，将并查集中的每个元素都指向自己
+}
+int find(int x){
+    if(x==f[x])return x;
+    return find(fa[x]);//并查集查找函数，找每个并查集的根节点，从而判断是不是在一个集合
+}
+void merge(){
+    int x=find(i);
+    int y=find(j);
+    fa[x]=y;//合并并查集
+}
+```
+
+# 算法
+
+## 图论
+
+### 求最小生成树
+
+- kruskal加边法，将边排序，从最小的开始加（贪心思想）不形成环，直到形成最小生成树
+
+```cpp
+#include <bits/stdc++.h>//万能头文件
+using namespace std;
+const int N=1000;
+int fa[N];
+int find(int x){
+    if(x==fa[x]){
+        return x;
+    }
+    return find(fa[x]);
+}
+void init(){
+    for(int i=0;i<N;i++){
+        fa[i]=i;
+    }
+}
+struct edge{
+    int u,v,w;
+}e[N];//定义边的结构体
+bool cmp(edge a,edge b){
+    return a.w<b.w;
+}
+int kruskal(int n,int m){
+    sort(e,e+m,cmp);
+    int ans=0;
+    int count=0;
+    for(int i=0;i<m;i++){
+        int x=find(e[i].u);
+        int y=find(e[i].v);
+        if(x!=y){
+            fa[y]=x;
+            count++;
+            ans+=e[i].w;
+        }
+    }
+    if(count==n-1)return ans;
+    else{
+        return -1;
+    }
+}
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    for(int i=0;i<m;i++){
+        cin>>e[i].u>>e[i].v>>e[i].w;
+    }
+    int ans=kruskal(n,m);
+    cout<<ans<<endl;
 }
 ```
