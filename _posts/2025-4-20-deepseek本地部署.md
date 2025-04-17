@@ -1,3 +1,7 @@
+---
+title: 内网穿透
+tags: TeXt
+---
 ### 一、部署Ollama（多平台选择安装）
 
 Ollama 支持 Linux/macOS/Windows，需根据系统选择安装方式。
