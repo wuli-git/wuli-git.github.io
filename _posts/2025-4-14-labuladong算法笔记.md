@@ -115,6 +115,216 @@ while(!pq.empty()){
 }
 ```
 
+## 7链表List
+
+```cpp
+//创建一个链表节点 class方法 struct方法
+class ListNode{
+public:
+    int val;
+    ListNode next*;
+    ListNode(int x):val(x),next(NULL){}
+};
+struct ListNode{
+    int val;
+    ListNode next*;
+    ListNode(int x):val(x),next(NULL){}
+};
+//创建一个单链表,
+ListNode*createLinkedList(vector<int>arr){//通过一个数组创键
+    if(arr.empty())return NULL;
+    ListNode*head=new ListNode(arr[0]);
+    ListNode* cur=head;
+    for(int i=0;i<arr.size();i++){
+        cur->next=new ListNode(arr[i]);
+        cur=cue->next;
+    }
+    return head;
+}
+ListNode *createinputList(void){//靠输入来创建
+    int x;
+    cin>>x;
+    ListNode *head=new ListNode(x);
+    ListNode *cur=head;
+    while((cin>>x)&&x!=-1){
+        cur->next=new ListNode(x);
+        cur=cur->next;
+    }
+    return head;
+}
+void traverse(ListNode *head){
+    for(ListNode*p=head;p!=NULL;p=p->next){
+        cout<<p->val<<" ";
+    }
+}
+//增
+ListNode *addElement(ListNode* head,int e){
+    ListNode*p=head;
+    while(p->next!=NULL)p=p->next;
+    p->next=new ListNode(e);
+    return head;
+}
+//在中间插入元素
+ListNode *addzhongjianList(ListNode head,int de,int val){
+    ListNode* p=head;
+    for(int i=0;i<de;i++){
+        p=p->next;
+    }
+    ListNode *Newnode=new ListNode(val);
+    Newnode->next=p->next;
+    p->next=Newnode;
+    return head;
+}
+//删除一个节点
+ListNode* deleteNode(ListNode *head,int de){
+    ListNode*p=head;
+    for(int i=0;i<de-1;i++){
+        p=p->next;
+    }
+    p->next=p->next->next;
+    return head;
+}
+//链表代码的实现
+#include <iostream>
+#include <stdexcept>
+template <tempname E>
+Class MyLinkList2{
+private:
+    struct Node{
+        E val;
+        Node* next;
+        Node(int x):val(x),next(NULL){}
+    };
+    Node *head;
+    Node *tail;
+    int size_;
+public:
+    MyLinkdedList2(){
+        head=new Node(E());
+        tail=head;
+        size_=0;
+    }
+    void addFirst(){
+         Node* newNode = new Node(e);
+        newNode->next = head->next;
+        head->next = newNode;
+        if (size_ == 0) {
+            tail = newNode;
+        }
+        size_++;
+    }
+    void addLast(E e){
+        Node *newNode=new Node(e);
+        tail->next=newNode;
+        Tail=newNode;
+        size_++;
+    }
+    void add(int index, E element) {
+        checkPositionIndex(index);
+
+        if (index == size_) {
+            addLast(element);
+            return;
+        }
+
+        Node* prev = head;
+        for (int i = 0; i < index; i++) {
+            prev = prev->next;
+        }
+        Node* newNode = new Node(element);
+        newNode->next = prev->next;
+        prev->next = newNode;
+        size_++;
+    }
+
+    E removeFirst() {
+        if (isEmpty()) {
+            throw std::out_of_range("No elements to remove");
+        }
+        Node* first = head->next;
+        head->next = first->next;
+        if (size_ == 1) {
+            tail = head;
+        }
+        size_--;
+        E val = first->val;
+        delete first;
+        return val;
+    }
+
+    E removeLast() {
+        if (isEmpty()) {
+            throw std::out_of_range("No elements to remove");
+        }
+
+        Node* prev = head;
+        while (prev->next != tail) {
+            prev = prev->next;
+        }
+        E val = tail->val;
+        delete tail;
+        prev->next = nullptr;
+        tail = prev;
+        size_--;
+        return val;
+    }
+
+    E remove(int index) {
+        checkElementIndex(index);
+
+        Node* prev = head;
+        for (int i = 0; i < index; i++) {
+            prev = prev->next;
+        }
+
+        Node* nodeToRemove = prev->next;
+        prev->next = nodeToRemove->next;
+        // 删除的是最后一个元素
+        if (index == size_ - 1) {
+            tail = prev;
+        }
+        size_--;
+        E val = nodeToRemove->val;
+        delete nodeToRemove;
+        return val;
+    }
+
+    // ***** 查 *****
+
+    E getFirst() {
+        if (isEmpty()) {
+            throw std::out_of_range("No elements in the list");
+        }
+        return head->next->val;
+    }
+
+    E getLast() {
+        if (isEmpty()) {
+            throw std::out_of_range("No elements in the list");
+        }
+        return getNode(size_ - 1)->val;
+    }
+
+    E get(int index) {
+        checkElementIndex(index);
+        Node* p = getNode(index);
+        return p->val;
+    }
+
+    // ***** 改 *****
+
+    E set(int index, E element) {
+        checkElementIndex(index);
+        Node* p = getNode(index);
+
+        E oldVal = p->val;
+        p->val = element;
+
+        return oldVal;
+    }
+}
+```
+
 ## 8.哈希表和哈希集合
 
 - 哈希表：散列表，键值对，key:value;通过哈希函数将key转化为数组的索引，再把value存在那个索引上
