@@ -429,6 +429,376 @@ void merge(){
 }
 ```
 
+## 红黑树
+
+红黑树（Red-Black Tree）是一种自平衡的二叉搜索树，它在计算机科学中被广泛应用，尤其是在需要高效存储和检索有序数据的场景中。以下是关于红黑树的详细介绍：1. 定义与性质红黑树是每个节点都带有颜色属性的二叉搜索树，颜色通常为红色或黑色。
+
+- 除了具备二叉搜索树的基本性质（左子树的所有节点值小于根节点值，右子树的所有节点值大于根节点值）外，还满足以下性质：
+
+- 每个节点要么是红色，要么是黑色。根节点是黑色。
+
+- 每个叶子节点（NIL 节点，空节点）是黑色。
+
+- 如果一个节点是红色的，那么它的两个子节点都是黑色的（即不存在连续的红色节点）。
+
+- 从任一节点到其每个叶子节点的所有路径都包含相同数目的黑色节点（称为黑高）。
+
+2. 优势与应用高效的插入和删除操作：普通的二叉搜索树在最坏情况下可能退化为链表，导致插入、删除和查找操作的时间复杂度为 \(O(n)\)。而红黑树通过维持上述性质，保证了在最坏情况下，这些操作的时间复杂度为 \(O(\log n)\)，其中 n 是树中节点的数量。有序数据的存储与检索：由于红黑树是二叉搜索树，它能很好地存储有序数据，常用于实现关联数组、字典等数据结构，例如 C++ 标准库中的 std::map 和 std::set 底层就可以基于红黑树实现。数据库索引：在数据库系统中，红黑树可以用于实现索引，加快数据的查询速度。
+
+3. 节点结构示例（以 C++ 代码表示）
+
+```cpp
+struct node{
+    int key;  // 节点存储的值
+    bool color;  // 节点颜色，true 表示红色，false 表示黑色
+    Node* left;
+    Node* right;
+    Node* parent;
+
+    Node(int k) : key(k), color(true), left(nullptr), right(nullptr), parent(nullptr) {}
+};
+```
+
+4. 插入操作插入新节点时，一般先按照二叉搜索树的规则插入，然后将新节点染成红色。接着，通过一系列的颜色调整和旋转操作（左旋、右旋）来恢复红黑树的性质。例如，若是插入根节点，直接把根节点染成黑色，如果新插入节点的父节点是红色，且父节点的兄弟节点也是红色，那么可能需要重新染色（将父节点和叔节点和爷节点进行交换）；如果父节点是红色且兄弟节点是黑色，可能需要进行旋转操作。（旋转之后对旋转的节点进行交换）
+
+5. 删除操作删除节点相对复杂一些。首先按照二叉搜索树的删除规则删除节点，然后根据被删除节点和其替代节点的颜色情况，进行相应的调整操作，以确保红黑树的性质仍然满足。可能会涉及到重新染色和旋转操作，以保持树的平衡和颜色性质。
+
+```cpp
+#include <iostream>
+
+// 定义红黑树节点颜色
+enum Color { RED, BLACK };
+
+// 红黑树节点结构
+struct Node {
+    int data;
+    bool color;
+    Node* left, * right, * parent;
+
+    Node(int data) : data(data), color(RED), left(nullptr), right(nullptr), parent(nullptr) {}
+};
+
+// 红黑树类
+class RedBlackTree {
+private:
+    Node* root;
+
+    // 左旋操作
+    void rotateLeft(Node*&, Node*&);
+    // 右旋操作
+    void rotateRight(Node*&, Node*&);
+    // 插入修复
+    void fixInsert(Node*&, Node*&);
+    // 查找最小节点
+    Node* minimum(Node* node);
+    // 删除修复
+    void fixDelete(Node*&, Node*);
+    // 辅助删除函数
+    void deleteNodeHelper(Node*&, Node*);
+    // 中序遍历辅助函数
+    void inorderHelper(Node*);
+
+public:
+    RedBlackTree() : root(nullptr) {}
+
+    // 插入操作
+    void insert(int data);
+    // 删除操作
+    void deleteNode(int data);
+    // 查找操作
+    Node* search(int data);
+    // 中序遍历
+    void inorder();
+};
+
+// 左旋操作
+void RedBlackTree::rotateLeft(Node*& root, Node*& x) {
+    Node* y = x->right;
+    x->right = y->left;
+
+    if (y->left != nullptr) {
+        y->left->parent = x;
+    }
+
+    y->parent = x->parent;
+
+    if (x->parent == nullptr) {
+        root = y;
+    } else if (x == x->parent->left) {
+        x->parent->left = y;
+    } else {
+        x->parent->right = y;
+    }
+
+    y->left = x;
+    x->parent = y;
+}
+
+// 右旋操作
+void RedBlackTree::rotateRight(Node*& root, Node*& y) {
+    Node* x = y->left;
+    y->left = x->right;
+
+    if (x->right != nullptr) {
+        x->right->parent = y;
+    }
+
+    x->parent = y->parent;
+
+    if (y->parent == nullptr) {
+        root = x;
+    } else if (y == y->parent->right) {
+        y->parent->right = x;
+    } else {
+        y->parent->left = x;
+    }
+
+    x->right = y;
+    y->parent = x;
+}
+
+// 插入修复
+void RedBlackTree::fixInsert(Node*& root, Node*& z) {
+    Node* parent_z = nullptr;
+    Node* grand_parent_z = nullptr;
+
+    while ((z != root) && (z->color != BLACK) && (z->parent->color == RED)) {
+        parent_z = z->parent;
+        grand_parent_z = z->parent->parent;
+
+        // 情况 A：父节点是祖父节点的左子节点
+        if (parent_z == grand_parent_z->left) {
+            Node* uncle_z = grand_parent_z->right;
+
+            // 情况 1：叔叔节点是红色
+            if (uncle_z != nullptr && uncle_z->color == RED) {
+                grand_parent_z->color = RED;
+                parent_z->color = BLACK;
+                uncle_z->color = BLACK;
+                z = grand_parent_z;
+            } else {
+                // 情况 2：叔叔节点是黑色，z 是父节点的右子节点
+                if (z == parent_z->right) {
+                    rotateLeft(root, parent_z);
+                    z = parent_z;
+                    parent_z = z->parent;
+                }
+
+                // 情况 3：叔叔节点是黑色，z 是父节点的左子节点
+                rotateRight(root, grand_parent_z);
+                std::swap(parent_z->color, grand_parent_z->color);
+                z = parent_z;
+            }
+        } 
+        // 情况 B：父节点是祖父节点的右子节点
+        else {
+            Node* uncle_z = grand_parent_z->left;
+
+            // 情况 1：叔叔节点是红色
+            if ((uncle_z != nullptr) && (uncle_z->color == RED)) {
+                grand_parent_z->color = RED;
+                parent_z->color = BLACK;
+                uncle_z->color = BLACK;
+                z = grand_parent_z;
+            } else {
+                // 情况 2：叔叔节点是黑色，z 是父节点的左子节点
+                if (z == parent_z->left) {
+                    rotateRight(root, parent_z);
+                    z = parent_z;
+                    parent_z = z->parent;
+                }
+
+                // 情况 3：叔叔节点是黑色，z 是父节点的右子节点
+                rotateLeft(root, grand_parent_z);
+                std::swap(parent_z->color, grand_parent_z->color);
+                z = parent_z;
+            }
+        }
+    }
+    root->color = BLACK;
+}
+
+// 查找最小节点
+Node* RedBlackTree::minimum(Node* node) {
+    while (node->left != nullptr)
+        node = node->left;
+    return node;
+}
+
+// 删除修复
+void RedBlackTree::fixDelete(Node*& root, Node* x) {
+    while (x != root && x->color == BLACK) {
+        if (x == x->parent->left) {
+            Node* w = x->parent->right;
+            if (w->color == RED) {
+                w->color = BLACK;
+                x->parent->color = RED;
+                rotateLeft(root, x->parent);
+                w = x->parent->right;
+            }
+            if (w->left->color == BLACK && w->right->color == BLACK) {
+                w->color = RED;
+                x = x->parent;
+            } else {
+                if (w->right->color == BLACK) {
+                    w->left->color = BLACK;
+                    w->color = RED;
+                    rotateRight(root, w);
+                    w = x->parent->right;
+                }
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->right->color = BLACK;
+                rotateLeft(root, x->parent);
+                x = root;
+            }
+        } else {
+            Node* w = x->parent->left;
+            if (w->color == RED) {
+                w->color = BLACK;
+                x->parent->color = RED;
+                rotateRight(root, x->parent);
+                w = x->parent->left;
+            }
+            if (w->right->color == BLACK && w->left->color == BLACK) {
+                w->color = RED;
+                x = x->parent;
+            } else {
+                if (w->left->color == BLACK) {
+                    w->right->color = BLACK;
+                    w->color = RED;
+                    rotateLeft(root, w);
+                    w = x->parent->left;
+                }
+                w->color = x->parent->color;
+                x->parent->color = BLACK;
+                w->left->color = BLACK;
+                rotateRight(root, x->parent);
+                x = root;
+            }
+        }
+    }
+    x->color = BLACK;
+}
+
+// 辅助删除函数
+void RedBlackTree::deleteNodeHelper(Node*& root, Node* z) {
+    Node* y = z;
+    Node* x;
+    bool y_original_color = y->color;
+
+    if (z->left == nullptr) {
+        x = z->right;
+        transplant(root, z, z->right);
+    } else if (z->right == nullptr) {
+        x = z->left;
+        transplant(root, z, z->left);
+    } else {
+        y = minimum(z->right);
+        y_original_color = y->color;
+        x = y->right;
+        if (y->parent == z) {
+            x->parent = y;
+        } else {
+            transplant(root, y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(root, z, y);
+        y->left = z->left;
+        y->left->parent = y;
+        y->color = z->color;
+    }
+
+    if (y_original_color == BLACK) {
+        fixDelete(root, x);
+    }
+}
+
+// 中序遍历辅助函数
+void RedBlackTree::inorderHelper(Node* node) {
+    if (node == nullptr) return;
+
+    inorderHelper(node->left);
+    std::cout << node->data << " ";
+    inorderHelper(node->right);
+}
+
+// 插入操作
+void RedBlackTree::insert(int data) {
+    Node* z = new Node(data);
+    Node* y = nullptr;
+    Node* x = root;
+
+    while (x != nullptr) {
+        y = x;
+        if (z->data < x->data)
+            x = x->left;
+        else
+            x = x->right;
+    }
+
+    z->parent = y;
+    if (y == nullptr)
+        root = z;
+    else if (z->data < y->data)
+        y->left = z;
+    else
+        y->right = z;
+
+    fixInsert(root, z);
+}
+
+// 删除操作
+void RedBlackTree::deleteNode(int data) {
+    Node* z = search(data);
+    if (z != nullptr) {
+        deleteNodeHelper(root, z);
+        delete z;
+    }
+}
+
+// 查找操作
+Node* RedBlackTree::search(int data) {
+    Node* temp = root;
+    while (temp != nullptr && temp->data != data) {
+        if (data < temp->data)
+            temp = temp->left;
+        else
+            temp = temp->right;
+    }
+    return temp;
+}
+
+// 中序遍历
+void RedBlackTree::inorder() {
+    inorderHelper(root);
+    std::cout << std::endl;
+}
+
+int main() {
+    RedBlackTree tree;
+
+    tree.insert(7);
+    tree.insert(6);
+    tree.insert(5);
+    tree.insert(4);
+    tree.insert(3);
+    tree.insert(2);
+    tree.insert(1);
+
+    std::cout << "Inorder traversal after insertion: ";
+    tree.inorder();
+
+    tree.deleteNode(5);
+
+    std::cout << "Inorder traversal after deletion of 5: ";
+    tree.inorder();
+
+    return 0;
+}    
+```
+
 # 算法
 
 ## 图论
@@ -488,3 +858,92 @@ int main()
     cout<<ans<<endl;
 }
 ```
+
+- prim算法，加点法，任意从一个点出发，加入已经选的点出发的最小边的点，且不会形成环，最后把所有的点都加进来
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+const int N=510;
+int m,n;
+int g[N][N];
+bool vis[N];
+int dist[N];//从已选的i节点出发到剩下没选的最短路劲
+int prim(void){
+    memset(dist,0x3f,sizeof(dist));
+    dist[1]=0;//1节点为参考点1到1的时候为0
+    int res=0;
+    for(int i=0;i<n;i++){
+        int t=-1;
+        for(int j=1;j<=n;j++){
+            if(!vis[j]&&t==-1||dist[t]<dist[j]){
+                t=j;
+            }
+            if(dist[t]==0x3f3f3f3f)return 0x3f3f3f3f;
+            res+=dist[t];
+            vis[t]=true;
+        }
+        for(int j=1;j<=n;j++){
+            dist[j]=min(dist[j],g[t][j]);//到达已选部分每个没选节点所需要的最小代价，只需要把新加入的节点比较一下就可以了
+        }
+    }
+    return res;
+}
+int main()
+{
+    cin>>n>>m;
+    for(int i=0;i<m;i++){
+        int u,v,w;
+        cin>>u>>v>>w;
+        g[u][v]=g[v][u]=min(g[u][v],w);
+    }
+    int ant=prim();
+    cout<<ant<<endl;
+    return 0;
+}
+```
+
+## 动态规划
+
+### 0-1背包问题
+
+- 问题描述：你只有c元，每件商品有价格w[i],价值v[i],从n件商品中选择,使得总价值最大，每件商品最多只能选择一件
+
+```cpp
+int knapsack(int n,int c,vector<int>&w,vector<int>&v){
+    vector<vector<int> >dp(n+1,vector<int>(c+1,0));
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=c;j++){
+            dp[i][j]=dp[i-1][j];//不选择
+            if(j>=w[i]){
+                dp[i][j]=max(dp[i-1][j],dp[i-1][j-w[i]]+v[i]);
+            }
+        }
+    }
+    return dp[n][c];
+}
+```
+
+### 多重背包问题
+
+- 问题简述：然而物品是有限的，第i个物品的价格为w[i]、参考的价值为v[i]，能买到的最大物品数量为s[i]，你需要以你的经验来购买获得最大的价值。
+- 输入：第一行2个数n(n<=500)，m(m<=6000)，其中n代表物品的种数，m表示你的经费。接下来n行，每行3个数，w[i] (w[i]<=100)、v[i] (v[i]<=1000)、s[i] (s[i]<=10)。
+
+- 上代码
+
+```cpp
+int mulknapsack(int n,int k,vector<int>&w,vector<int>&v,vector<int>&s){
+    vector<vector<int> >dp(n+1,vector<int>(c+1,0));//前i件商品背包容量为j；
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=c;j++){
+            dp[i][j]=dp[i][j-1];//第i件都不选
+            for(int k=1;k<=s[i]&&k*w[i]<=j;k++){//第i件选k个
+                dp[i][j]=max(dp[i-1][j],dp[i-1][j-k*w[i]]+k*v[i]);
+            }
+        }
+    }
+    return dp[n][c];
+}
+```
+
