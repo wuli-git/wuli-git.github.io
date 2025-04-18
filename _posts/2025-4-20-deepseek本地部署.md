@@ -2,7 +2,11 @@
 title: 内网穿透
 tags: TeXt
 ---
-### 一、部署Ollama（多平台选择安装）
+### 一、部署Ollama（多平台选择安装）（部署r1模型）
+
+- r1:有更强的数学代码能力，逻辑推理能力更强，但是会说一堆废话
+
+v3:普通的大语言模型 
 
 Ollama 支持 Linux/macOS/Windows，需根据系统选择安装方式。
 
@@ -13,7 +17,7 @@ Ollama 支持 Linux/macOS/Windows，需根据系统选择安装方式。
 
 一键安装：
 
-curl -fsSL https://ollama.com/install.sh | sh
+curl -fsSL <https://ollama.com/install.sh> | sh
 1
 权限配置（避免 sudo 运行）：
 
@@ -36,7 +40,7 @@ ollama --version               # 输出版本号即成功
 
 一键安装：
 
-curl -fsSL https://ollama.com/install.sh | sh
+curl -fsSL <https://ollama.com/install.sh> | sh
 1
 启动服务：
 
@@ -64,9 +68,6 @@ Windows 10/11 64位
 ollama list                    # 查看已安装模型
 1
 
-
-💬
-
 如何配置远程 Ollama 服务？
 默认情况下，Ollama 服务仅在本地运行，不对外提供服务。要使 Ollama 服务能够对外提供服务，你需要设置以下两个环境变量：
 
@@ -90,8 +91,6 @@ systemctl restart ollama
 二、拉取并运行DeepSeek模型
 官方模型库参考：Ollama DeepSeek-R1 页面
 
-
-
 1. 拉取模型
 ollama pull deepseek-r1          # 官方推荐模型名称
 1
@@ -102,8 +101,8 @@ ollama pull deepseek-r1:33b    # 33B参数进阶版（需更高显存）
 1
 2
 
-
 2. 运行模型
+
 ollama run deepseek-r1
 1
 验证交互：
@@ -158,7 +157,6 @@ nvidia-smi               # 查看GPU利用率
 四、AI问答应用接入本地大模型
 方式1：部署MaxKB并接入Ollama
 
-
 1. 通过Docker部署MaxKB
 docker run -d \  
   --name=maxkb \  
@@ -170,7 +168,7 @@ docker run -d \
 3
 4
 5
-访问 http://localhost:8080，默认账号密码 admin/MaxKB@123…
+访问 <http://localhost:8080，默认账号密码> admin/MaxKB@123…
 2. 配置Ollama模型接入
 进入MaxKB控制台：模型管理 > 添加模型
 
@@ -180,16 +178,11 @@ docker run -d \
 
 模型名称：DeepSeek-r1
 
-Base URL：http://ollama主机ip:11434（Docker内访问宿主机）
+Base URL：<http://ollama主机ip:11434（Docker内访问宿主机）>
 
 模型名称：deepseek-r1（与Ollama拉取的模型名一致）
 
-
-
 3. 创建应用并测试问答功能
-
-
-
 
 方式2：本地安装chatBox AI并接入本地大模型
 1、下载安装包
@@ -206,23 +199,18 @@ Base URL：http://ollama主机ip:11434（Docker内访问宿主机）
 
 在 ChatBox 设置中选择 **ollama api**，填写：
 
-API Endpoint: http://localhost:11434
+API Endpoint: <http://localhost:11434>
 
 API Key: 留空
 
 Model Name: deepseek-r1（与 Ollama 模型名称一致）
 
-
-
-
-
 3.2 可以自定义界面
-
 
 3.3 验证使用
 
-
 五、常用的故障排查方法
+
 1. Ollama服务无法启动
 日志查看：
 
@@ -240,15 +228,15 @@ ollama rm deepseek-r1 && ollama pull deepseek-r1
 3. MaxKB连接超时
 检查网络：
 
-curl http://ollama-ip:11434  # 确认Ollama API可达
+curl <http://ollama-ip:11434>  # 确认Ollama API可达
 1
 跨域问题：在Ollama启动时添加：
 
 OLLAMA_ORIGINS="*" ollama serve
 1
 六、性能优化建议
-场景	推荐配置
-CPU模式	使用
-GPU模式	启用
+场景 推荐配置
+CPU模式 使用
+GPU模式 启用
 七、AI服务器性能监控
 我使用zabbix+grafana对服务器做了资源使用情况的监控，因为我的服务器没有GPU，全部使用CPU去跑，当我运行大模型的时候，可以看到服务器资源站哟比较高（目前我测试用的的Deepseek-r1:7b）
