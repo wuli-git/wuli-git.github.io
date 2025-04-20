@@ -803,6 +803,73 @@ int main() {
 
 ## 图论
 
+### 求最短路径
+
+- 问题描述:给定一个n个点m条边的有向图，图中可能存在重边和自环，所有边权均为正值。
+请你求出1号点到其他点的最短距离，如果无法从1号点走到n号点，则输出-1。
+- 输入
+第一行包含整数n和m。1<=n<=500, 1<=m<=100000
+接下m行每行包含三个整数x，y，z，表示存在一条从点x到点y的有向边，边长为z。
+- 输出:输出n个整数，表示1号点到n号点的最短距离。
+
+- dijkstra:两次循环，edge{int to,int w};图结构vector<edge>e[N];dis[N]:到源点的距离；vis[N]来标记是否出圈（被选中了，下一次就不能再选），第一次循环是层数，第二层循环有两个，第一个是找那一层最小的路径的节点，第二个循环是找那个节点的的相邻点去进行松弛操作是否成立。
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+const int inf=0x3f3f3f3f;
+const int N=100;
+int n,m;
+struct edge{int to,w;};
+int dis[N];
+vector<edge> e[N];//一个数组，数组里面是与节点相连节点的vector，vector包含节点和与那个节点的权值 
+bool vis[N]={false};
+void dijkstra(int start){
+ for(int i=0;i<=n;i++){
+  dis[i]=inf;  
+ }
+ dis[start]=0;
+ for(int i=0;i<n;i++){
+  int u=-1;
+  int mind=inf;
+  for(int j=1;j<=n;j++){
+   if(!vis[j]&&dis[j]<mind){
+    u=j;
+    mind=dis[j];
+   }
+  }
+  if(u==-1)break;
+  vis[u]=true;
+  for(int j=0;j<e[u].size();j++){//每个位置的访问结界一定要搞清楚 
+   int v=e[u][j].to;
+   int w=e[u][j].w;
+   if(dis[v]>dis[u]+w){
+    dis[v]=dis[u]+w;
+   }
+  }
+ }
+}
+int main()
+{
+ cin>>n>>m;
+ for(int i=0;i<m;i++){
+  int u,v,w;
+  cin>>u>>v>>w;
+  e[u].push_back({v,w});
+ }
+ int start=1;
+ dijkstra(start);
+ for(int i=1;i<=n;i++){
+  if(dis[i]!=inf){
+   cout<<dis[i]<<" ";
+  }else{
+   cout<<-1<<" ";
+  }
+ }
+ return 0; 
+}
+```
+
 ### 求最小生成树
 
 - kruskal加边法，将边排序，从最小的开始加（贪心思想）不形成环，直到形成最小生成树
