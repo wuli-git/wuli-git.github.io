@@ -207,145 +207,67 @@ ListNode* deleteNode(ListNode *head,int de){
     p->next=p->next->next;
     return head;
 }
-//链表代码的实现
-#include <iostream>
-#include <stdexcept>
-template <tempname E>
-Class MyLinkList2{
-private:
-    struct Node{
-        E val;
-        Node* next;
-        Node(int x):val(x),next(NULL){}
-    };
-    Node *head;
-    Node *tail;
-    int size_;
-public:
-    MyLinkdedList2(){
-        head=new Node(E());
-        tail=head;
-        size_=0;
-    }
-    void addFirst(){
-         Node* newNode = new Node(e);
-        newNode->next = head->next;
-        head->next = newNode;
-        if (size_ == 0) {
-            tail = newNode;
+```
+
+### 7.2有关链表算法问题
+
+- 7.2.1合并两个有序链表
+
+```cpp
+ListNode *mergeList(ListNode *l1,ListNode *l2){
+    ListNode *dummy(-1),*p=&dummy;//虚拟头结点
+    ListNode *p1=l1,*p2=l2;
+    while(p1!=nullptr&&p2!=nullptr){
+        if(p1->val<p2->val){
+            p->next=p1;
+            p1=p1->next;
+        }else{
+            p->next=p2;
+            p2->next=p2;
         }
-        size_++;
     }
-    void addLast(E e){
-        Node *newNode=new Node(e);
-        tail->next=newNode;
-        Tail=newNode;
-        size_++;
+    if(p1!=nullptr){
+        p->next=p1;
     }
-    void add(int index, E element) {
-        checkPositionIndex(index);
-
-        if (index == size_) {
-            addLast(element);
-            return;
-        }
-
-        Node* prev = head;
-        for (int i = 0; i < index; i++) {
-            prev = prev->next;
-        }
-        Node* newNode = new Node(element);
-        newNode->next = prev->next;
-        prev->next = newNode;
-        size_++;
+    if(p2!=nullptr){
+        p->next=p2;
     }
-
-    E removeFirst() {
-        if (isEmpty()) {
-            throw std::out_of_range("No elements to remove");
-        }
-        Node* first = head->next;
-        head->next = first->next;
-        if (size_ == 1) {
-            tail = head;
-        }
-        size_--;
-        E val = first->val;
-        delete first;
-        return val;
-    }
-
-    E removeLast() {
-        if (isEmpty()) {
-            throw std::out_of_range("No elements to remove");
-        }
-
-        Node* prev = head;
-        while (prev->next != tail) {
-            prev = prev->next;
-        }
-        E val = tail->val;
-        delete tail;
-        prev->next = nullptr;
-        tail = prev;
-        size_--;
-        return val;
-    }
-
-    E remove(int index) {
-        checkElementIndex(index);
-
-        Node* prev = head;
-        for (int i = 0; i < index; i++) {
-            prev = prev->next;
-        }
-
-        Node* nodeToRemove = prev->next;
-        prev->next = nodeToRemove->next;
-        // 删除的是最后一个元素
-        if (index == size_ - 1) {
-            tail = prev;
-        }
-        size_--;
-        E val = nodeToRemove->val;
-        delete nodeToRemove;
-        return val;
-    }
-
-    // ***** 查 *****
-
-    E getFirst() {
-        if (isEmpty()) {
-            throw std::out_of_range("No elements in the list");
-        }
-        return head->next->val;
-    }
-
-    E getLast() {
-        if (isEmpty()) {
-            throw std::out_of_range("No elements in the list");
-        }
-        return getNode(size_ - 1)->val;
-    }
-
-    E get(int index) {
-        checkElementIndex(index);
-        Node* p = getNode(index);
-        return p->val;
-    }
-
-    // ***** 改 *****
-
-    E set(int index, E element) {
-        checkElementIndex(index);
-        Node* p = getNode(index);
-
-        E oldVal = p->val;
-        p->val = element;
-
-        return oldVal;
-    }
+    return dummy->next;//返回虚拟节点的下一个节点
 }
+```
+
+- 7.2.2环形链表
+
+- 快慢指针,fast,slow
+
+```cpp
+
+```
+
+- 7.2.3环形列表（需要求出从哪个节点开始环）
+
+- 用快慢指针，当快慢指针在同一位置时，将其中一个指针指向head，以相同速度向后走，当再次相遇时的节点是要求的节点
+
+```cpp
+ListNode *detectCycle(ListNode *head) {
+        ListNode *fast=head,*slow=head;
+        while(fast!=nullptr&&fast->next!=nullptr){
+            fast=fast->next->next;
+            slow=slow->next;
+            if(fast==slow){
+                break;
+            }
+        }
+        if(fast==nullptr||fast->next==nullptr){
+            return NULL;
+        }
+        slow=head;
+        while(slow!=fast){
+            fast=fast->next;
+            slow=slow->next;
+        }
+        return fast;
+    }
 ```
 
 ## 8.哈希表和哈希集合
