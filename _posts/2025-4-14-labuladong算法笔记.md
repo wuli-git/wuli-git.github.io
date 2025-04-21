@@ -270,6 +270,61 @@ ListNode *detectCycle(ListNode *head) {
     }
 ```
 
+#### 7.2.4
+
+- 分割链表:给出一个链表List和一个关键字x，将比x小和比x大的分开，最后再连成一条链，小的在x左边，大的在右边
+
+```cpp
+ListNode partitio(ListNode *head,int x){
+    ListNode *dummy1=new ListNode(-1),*p1=dummy1;
+    ListNode *dummy2=new ListNode(-1),*p2=dummy2;
+    ListNode *p=head;
+    while(p!=nullptr){
+        if(p->val<x){
+            p1->next=p;
+            p1=p1->next;
+        }else{
+            p2->next=p;
+            p2=p2->next;
+        }
+        ListNode *temp=p->next;
+        p->next=nullptr;
+        p=temp;
+    }
+    p1->next=dummy2->next;
+    return dummy1->next;
+}
+```
+
+#### 7.2.5.合并k个链表
+
+- 这里要用到优先级队列这种数据结构，把链表节点放入一个最小堆，就可以每次获得 k 个节点中的最小节点
+
+```cpp
+struct cmp{
+    bool operator()(const ListNode *a,const ListNode *b){
+        return a->val>b->val;
+    }
+};//priority_queue接受的cmp参数是一个结构体参数
+ListNode *mergeKList(vector<ListNode *>&lists){
+    if(lists.empty())return nullptr;
+    ListNode *dummy=new ListNode(-1),*p=dummy;
+    priority_queue<ListNode*,vector<ListNode*>,cmp>pq;
+    for(ListNode *head:lists){//将每个链表的头结点加入到pq中
+        if(head!=nullptr){
+            pq.push_back(head);
+        }
+    }
+    while(!pq.empty()){
+        p->next=pq.top();
+        pq.pop();
+        if(pq->next->next!=nullptr)pq.push_back(pq->next->next);
+        p=p->next;//要知道是把哪一个节点加入到pq中
+    }
+    return dummy->next;
+}
+```
+
 ## 8.哈希表和哈希集合
 
 - 哈希表：散列表，键值对，key:value;通过哈希函数将key转化为数组的索引，再把value存在那个索引上
