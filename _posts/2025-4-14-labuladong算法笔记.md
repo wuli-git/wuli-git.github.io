@@ -19,7 +19,10 @@ tags: TeXt
   - [9. 并查集 fa [N]](#9并查集fan)
   - [10. 红黑树](#10红黑树)
 - [二、算法](#算法)
-  - [1. 图论](#1图论)
+    [1.dfs深搜回溯](#21dfs深搜回溯)
+  - [1.1.1数独问题](#211数独问题)
+  - [1.1.2n位二进制的全排列](#212n位二进制数的全排列)
+  - [1. 图论](#2图论)
     - [求最短路径](#求最短路径)
     - [求最小生成树](#求最小生成树)
   - [2. 动态规划](2#动态规划)
@@ -819,11 +822,9 @@ int main() {
 }    
 ```
 
-# 算法
+# 二、算法
 
-## 1.图论
-
-### DFS(深搜/回溯)
+## 2.1、DFS(深搜/回溯)
 
 - 从图或树的某个起始节点开始，沿着一条路径尽可能深地探索下去，直到不能再继续深入或者达到目标节点，然后回溯到上一个节点，继续探索其他未被访问的分支路径，直到遍历完所有节点或者找到目标节点为止。
 
@@ -837,7 +838,99 @@ int main() {
 
 3、结束条件：也就是到达决策树底层，无法再做选择的条件。
 
-### 走迷宫问题
+- DFS模版(全排列问题cpp)
+
+```cpp
+trackbacks(num,used,tracks){
+    if(tracks.szie()==used.size()){//选择好了一个答案
+        res.push_back(track);
+        return;
+    }//base case 和递归出口
+    for(int i=0;i<nums.size();i++){//选择列表
+        if(used(i)){//从选择列表中选择
+            continue;
+        }//这是最基本的剪枝逻辑
+        used[i]=true;
+        tracks.push_back(num[i]);//加入路劲
+        trackbacks(num,used,tracks);
+        used[i]=false;
+        tracks.pop_back();//回溯操作
+    }
+}
+```
+
+#### 2.1.1、数独问题
+
+- 9*9的数独填空9*9的9叉树，但是会有很多剪枝
+
+```cpp
+class solution{
+private:
+    bool found=false;
+    int m=9,n=9;
+public:
+    void shudusolution(vector<vector> >board){
+        backtrack(board,0);
+    }
+    backtrack(vector<vector> >&board,int index){
+        int i=index/m,j=index%n;//把二维数组变成一维的表示
+        if(found)return;//递归出口
+        if(index==m*n){
+            found=true;
+        }
+        if(board[i][j]!='.'){
+            backtrack(board,index+1);
+        }//base case
+        for(char ch='1';ch<='9';ch++){
+            if(!is_valid(board,i,j,ch)){
+                continue;
+            }//剪枝
+            board[i][j]=ch;
+            backtrack(board,index+1);
+            if(found){
+                return;
+            }
+            board[i][j]='.';
+        }
+    }
+    bool is_valid(vector<vector<int> >&board,int r,int c,char ch){
+        for(int i=0;i<9;i++){
+            if(board[r][i]==ch)return false;
+            if(board[i][l]==ch)return false;
+            if(board[(r/3)*3+i/3][(c/3)*3+i%3]==ch)return false;//每个小方格的每一个数字都相等
+        }
+        return true;
+    }
+};
+```
+
+#### 2.1.2、n位二进制数的全排列
+
+```cpp
+class solution{
+private:
+ vector<vector<int> >res;
+public:
+ vector<int>tracks;
+ vector<vector<int> >binaryGenarate(int n){
+  trackbacks(n,0);
+  return res;
+ } 
+ void trackbacks(int n,int i){
+  if(i==n){
+   res.push_back(tracks);
+   return;
+  }
+  for(int val:{0,1}){
+   tracks.push_back(val);
+   trackbacks(n,i+1);
+   track.pop_back();
+  }
+ }
+};
+```
+
+### 2.2走迷宫问题
 
 #### 走迷宫
 
@@ -903,6 +996,8 @@ int main(){
     return 0;
 } 
 ```
+
+## 2.2.图论
 
 ### 求最短路径
 
