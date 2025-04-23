@@ -391,6 +391,7 @@ if(it!=set.end()){
 }else{
     return false;//查找
 }
+set.erase(val);//删除
 ```
 
 - 例题：通过哈希表来给出一个数组a中每个数字出现了几次，将数字为key直接为unorder_set的索引，出现次数为value
@@ -905,6 +906,75 @@ public:
   }
  }
 };
+```
+
+#### 2.1.3 凑24(或者凑某个数)
+
+- 用堆栈，vector,DFS,两个循环去选择要算的数，再一个循环去把未选择的加入vector中，再循环op(符号)将选择的两个数原运算结果加进去，最后只剩一个看是不是要求的数（相当于把所有数放到一个集合，再取出两个，算出结果，放回那个集合，再重复，又取出两个数）
+
+- 注意：最底层的递归出口和中途回溯的区别，当有一个成功，就一直回溯返回，到递归最底层发现不行，只回溯一层，然后选择另一条路进行走，当所有路都走完了，再返回false;当输入某个值结束的判断方法，用break,判断实数相等的方法
+
+- 现在的问题是，是否存在一种方式使得得到的表达式的结果等于24。这里加减乘除以及括号的运算结果和运算的优先级跟我们平常的定义一致（这里的除法定义是实数除法）。
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+const double MINNUM=1e-6;
+bool is_equal(double a,double b){
+    return fabs(a-b)<MINNUM;
+}//判断
+bool DFS(vector<douuble>nums){
+    if(nums.size()==1){
+        if(is_equal(nums[0],24)){
+            return true;
+        }
+        return false;//最底层的递归出口
+    }
+    int n=nums.size();
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(i==j)continue;
+            vector<double>newNum;
+            for(int k=0;k<n;k++){
+                if(k==i&&k==j)continue;
+                newNum.push_back(nums[k]);
+            }
+            for(int op=0;op<4;op++){
+                if(op==0){
+                    nexNum.push_back(nums[i]+nums[j]);
+                }else if(op==1){
+                    nextNum.push_back(nums[i]-nums[j]);
+                }else if(op==2){
+                    next.push_back(nums[i]*nums[j]);
+                }else{
+                    if(nums[j]!=0){
+                        newNum.push_back(nums[i]/nums[j]);
+                    }
+                }
+                if(DFS(newNum)){
+                    return true;
+                }
+                newNum.pop_back();//回溯
+            }
+        }
+    }
+    return false;
+}
+int main()
+{
+    vector<int>a(4);
+    while(true){
+        for(int i=0;i<4;i++){cin>>a[i];}
+        if(a[0]==0&&a[1]==0&&a[2]==0&&a[3]==0)break;
+        vector<double>nums(a.begin(),a.end());//vector的复制
+        if(DFS(nums)){
+            cout<<"YES"<<endl;
+        }else{
+            cout<<"NO"<<endl;
+        }
+    }
+    return 0;
+}
 ```
 
 ### 2.2走迷宫问题
