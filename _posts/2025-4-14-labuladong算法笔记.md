@@ -1,5 +1,5 @@
 ---
-title: labuladong
+title: labuladong algorithm 笔记
 tags: TeXt
 ---
 
@@ -7,27 +7,44 @@ tags: TeXt
 
 ## 目录
 
-- [一、数据结构](#一、数据结构)
-  - [1. vector](#1.vector)
-  - [2. stack](#2stack)
-  - [3. queue](#3queue)
-  - [4. unordered_set](#4unordered_set哈希集合后文有更详细介绍)
-  - [5. string](#5string)
-  - [6. priority_queue](#6priority_queue)
-  - [7. 链表 List](#7链表list)
-  - [8. 哈希表和哈希集合](#8哈希表和哈希集合)
-  - [9. 并查集 fa [N]](#9并查集fan)
-  - [10. 红黑树](#10红黑树)
-- [二、算法](#算法)
-    [1.dfs深搜回溯](#21dfs深搜回溯)
-  - [1.1.1数独问题](#211数独问题)
-  - [1.1.2n位二进制的全排列](#212n位二进制数的全排列)
-  - [1. 图论](#2图论)
-    - [求最短路径](#求最短路径)
-    - [求最小生成树](#求最小生成树)
-  - [2. 动态规划](2#动态规划)
-    - [0-1 背包问题](#0-1背包问题)
-    - [多重背包问题](#多重背包问题)
+- # 数据结构与算法目录
+
+[一、数据结构](#一数据结构)  
+
+- [1. vector](#1vector)  
+- [2. stack](#2stack)  
+- [3. queue](#3queue)  
+- [4. unordered_set（哈希集合）](#4unordered_set哈希集合)  
+- [5. string](#5string)  
+- [6. priority_queue（优先队列）](#6priority_queue优先队列)  
+- [7. 链表（List）](#7链表list)  
+  - [7.1 链表基本操作](#71链表基本操作)  
+  - [7.2 链表相关算法问题](#72链表相关算法问题)  
+- [8. 哈希表和哈希集合](#8哈希表和哈希集合)  
+  - [8.1 哈希表基本概念](#81哈希表基本概念)  
+  - [8.2 哈希函数与哈希冲突](#82哈希函数与哈希冲突)  
+  - [8.3 哈希集合（unordered_set）](#83哈希集合unordered_set)  
+- [9. 并查集（fa [N]）](#9并查集fan)  
+- [10. 红黑树](#10红黑树)  
+
+[二、算法](#二算法)  
+
+- [1. DFS（深搜 / 回溯）](#1dfs深搜-回溯)  
+  - [1.1 DFS 基本概念与模板](#11dfs-基本概念与模板)  
+  - [1.2 DFS 应用实例](#12dfs-应用实例)  
+    - [1.2.1 数独问题](#121数独问题)  
+    - [1.2.2 n 位二进制数的全排列](#122n-位二进制数的全排列)  
+    - [1.2.3 凑数问题（如凑 24）](#123凑数问题如凑-24)  
+- [2. 走迷宫问题与矩阵中的最长递增路径](#2走迷宫问题与矩阵中的最长递增路径)  
+  - [2.1 走迷宫问题概述](#21走迷宫问题概述)  
+  - [2.2 矩阵中的最长递增路径问题描述与解法](#22矩阵中的最长递增路径问题描述与解法)  
+- [3. 图论相关算法](#3图论相关算法)  
+  - [3.1 最大流问题](#31最大流问题)  
+  - [3.2 最短路径问题（Dijkstra 算法）](#32最短路径问题dijkstra-算法)  
+  - [3.3 最小生成树问题（Kruskal 算法与 Prim 算法）](#33最小生成树问题kruskal-算法与-prim-算法)  
+- [4. 动态规划](#4动态规划)  
+  - [4.1 0-1 背包问题](#410-1-背包问题)  
+  - [4.2 多重背包问题](#42多重背包问题)  
 
 ## 1.vector
 
@@ -1045,6 +1062,93 @@ int main(){
 ```
 
 ## 2.2.图论
+
+### 2.2.1最大流问题
+
+- 可行流：每条链上的实际流量小于最大流量，每个节点的流入量等于流出量；
+
+- 求最大流：从源点到汇点的最大流量，标号法：先将源点为无穷大流，再找已经标号节点的邻居节点（队列），标上一个节点和正向弧的较小值，将其前驱结点记录下来，重复进行直到最后一个节点，再进行回溯，正向回溯的弧流以最大容量减去后一个节点增加的，反向加上，因为是看的每个弧上的还剩的流量
+
+- 问题：第1行:两个用空格分开的整数M,N(0<M≤200,0<N≤200)。M是方案中的路段数量,N是路线交汇点的数量。其中点1是生产   地,点N是目的地。第2行到第M+1行:每行有三个整数Si,Ei,Ci。 其中Si​和Ei(1≤Si,Ei≤N)指明该路段的两个端点,口罩从Si​单向运往Ei​。Ci(0<Ci≤100000)是这段路线的最大运输量.
+
+- 输出：该方案的最大运输量
+
+- 注意：这种带权的问题一般用邻接矩阵，vector<unordered_set<int> >也要注意
+BFS的常见写法
+
+```plaintext
+while(!Q.empty()){
+    int u=Q.front();
+    Q.pop();
+    for(int v;v<N;v++){
+        if(G[u][v]>0&&!vis[v]){
+            ....
+            Q.push(v);
+        }
+    }
+}
+```
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+int M,N;
+vector<vector> >Graph(200,vector<int>(200,0));
+int pre[201];
+int flow[201];
+int s,t;
+const int inf=0x3f3f3f3f;
+bool BFS(){
+    fill(pre,pre+N,-1);
+    fill(flow,flow+N,0);
+    queue<int>Q;
+    Q.push(s);
+    flow[s]=inf;
+    while(!Q.empty()){
+        int u=Q.front();
+        Q.pop();
+        for(int v=0;v<N;v++){
+            if(G[u][v]>0&&pre[v]==-1){
+                flow[v]=min(G[u][v],flow[u]);
+                pre[v]=u;
+                if(v==t)return true;
+                Q.push(v);//BFS的常见套路
+            }
+        }
+    }
+    return false;
+}
+int maxFlow(){
+    int maxflow=0;
+    while(BFS()){
+            maxflow+=flow[t];
+            int v=t;
+            while(v!=s){
+                int u=pre[v];
+                Graph[u][v]-=node[t];//看的是剩下的
+                Graph[v][u]+=ndoe[t];//反向应该与正向一样大
+                v=u;
+            }
+    }
+    return maxflow;
+}
+int main()
+{
+    cin>>M>>N;
+    s=0;
+    t=N-1;//从0开始计数
+    for(int i=0;i<M;i++){
+        int u,v,w;
+        cin>>u>>v>>w;
+        u--;
+        v--;
+        G[u][v]=w;
+    }
+    int ans=maxFlow();
+    cout<<ans<<endl;
+    return 0;
+}
+```
 
 ### 求最短路径
 
