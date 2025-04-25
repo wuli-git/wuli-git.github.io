@@ -1323,11 +1323,15 @@ int main()
 ### 0-1背包问题
 
 - 问题描述：你只有c元，每件商品有价格w[i],价值v[i],从n件商品中选择,使得总价值最大，每件商品最多只能选择一件
+- 限制：当V过于大时，动态数组dp开的过于大会超出限制，这时就要用到回溯，DFS
 
 ```cpp
 int knapsack(int n,int c,vector<int>&w,vector<int>&v){
     vector<vector<int> >dp(n+1,vector<int>(c+1,0));
-    for(int i=1;i<=n;i++){
+    for(int i=v[0];i<=V;i++){
+        dp[0][i]=w[i];//从0开始计数的初始化
+    }
+    for(int i=1;i<=n;i++){//这里一定要从1开始，如果是从0开始的第一个数，一定要初始化，但是这里还是从1开始
         for(int j=1;j<=c;j++){
             dp[i][j]=dp[i-1][j];//不选择
             if(j>=w[i]){
@@ -1336,6 +1340,19 @@ int knapsack(int n,int c,vector<int>&w,vector<int>&v){
         }
     }
     return dp[n][c];
+}
+```
+
+```cpp
+backtrace(0,0,0);
+void backtrace(int index,int currentW,int currentV){
+    if(currentW>max_ans)
+    max_ans=currentV;
+    for(int i=index;i<=N;i++){
+        if(currentV+v[i]<V){
+            backtrace(inedx+1,currentW+w[i],currentV+v[i]);
+        }
+    }
 }
 ```
 
