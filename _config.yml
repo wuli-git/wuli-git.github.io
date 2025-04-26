@@ -34,11 +34,11 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 ## => Author and Social
 ##############################
 author:
-  type      : # "person" (default), "organization"
+  type      : person# "person" (default), "organization"
   name      : wuli
   url       :
-  avatar    : # path or url of avatar image (square)
-  bio       : I am an sunshine person.
+  avatar    : "D:\\myblog\\assets\\头像.png" # path or url of avatar image (square)
+  bio       : 做一个诗意，浪漫，自律的人.
   email     :
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
@@ -96,19 +96,19 @@ chart: # false (default), true
 
 ## => Paginate
 ##############################
-paginate: 8
+paginate: 6
 paginate_path: /page:num # don't change this unless for special need
 
 
 ## => Sources
 ##############################
-sources: # bootcdn (default), unpkg
+sources: bootcdn # bootcdn (default), unpkg
 
 
 ## => Sharing
 ##############################
 sharing:
-  provider: false # false (default), "addtoany", "addthis", "custom"
+  provider: addtoany # false (default), "addtoany", "addthis", "custom"
 
   ## AddThis
   addthis:
@@ -118,7 +118,7 @@ sharing:
 ## => Comments
 ##############################
 comments:
-  provider: false # false (default), "disqus", "gitalk", "valine", "custom"
+  provider: valine # false (default), "disqus", "gitalk", "valine", "custom"
 
   ## Disqus
   disqus:
@@ -137,8 +137,8 @@ comments:
   ## Valine
   # please refer to https://valine.js.org/en/ for more info.
   valine:
-    app_id      : # LeanCloud App id
-    app_key     : # LeanCloud App key
+    app_id      : Favohrffq0ZtxDphpXUChnqd-gzGzoHsz # LeanCloud App id
+    app_key     : UYaxXCIA2w4u0bNHJGboO4nn # LeanCloud App key
     placeholder : # Prompt information
     visitor     : # false (default)
     meta        : # "[nick, mail, link]" (default) nickname, E-mail, Personal-site
@@ -147,19 +147,19 @@ comments:
 ## => Pageview
 ##############################
 pageview:
-  provider: false # false (default), "leancloud", "custom"
+  provider: leancloud # false (default), "leancloud", "custom"
 
   ## Leancloud
   leancloud:
-    app_id    : # LeanCloud App id
-    app_key   : # LeanCloud App key
-    app_class : # LeanCloud App class
+    app_id    : Favohrffq0ZtxDphpXUChnqd-gzGzoHsz  # LeanCloud App id
+    app_key   : UYaxXCIA2w4u0bNHJGboO4nn # LeanCloud App key
+    app_class : test # LeanCloud App class
 
 
 ## => Search
 ##############################
 search:
-  provider: default # "default" (default), false, "google", "custom"
+  provider: custom # "default" (default), false, "google", "custom"
 
   ## Google Custom Search Engine
   google:
