@@ -20,9 +20,9 @@ text_skin: forest # "default" (default), "dark", "forest", "ocean", "chocolate",
 highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl : # does not include hostname
-title   : wuli's bolg
+title   : Be a poetic and romantic person
 description: > # this means to ignore newlines until "Language & timezone"
-  this is wuli's netblog
+  做一个诗意，浪漫，自律的人
 
 
 ## => Language and Timezone
@@ -39,7 +39,7 @@ wuli:
   url       : https://wuli.name
   avatar    : "D:\\myblog\\assets\\头像.png" # path or url of avatar image (square)
   bio       : 做一个诗意，浪漫，自律的人.
-  email     :1328433750@qq.com
+  email     :
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
   weibo     : # "user_id"   the last part of your profile url, e.g. https://www.weibo.com/user_id/profile?...
