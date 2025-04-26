@@ -994,6 +994,45 @@ int main()
 }
 ```
 
+#### 2.1.4N皇后问题
+
+- 以行作为DFS的基准，DFS的常见套路;
+
+```cpp
+bool is_valid(vector<vector<int>&board,int row,int col){
+    int n=board[0].size();
+    for(int i=0;i<row;i++){
+        if(board[i][col]==1)return false;
+    }
+    for(int i=row-1,j=col-1;i>=0&&j>=0;i--,j--){
+        if(board[i][j]==1)return false;
+    }
+    for(int i=row-1,j=col+1;i>=0&&j<n;i--,j++){
+        if(board[i][j]==1)return false;
+    }
+    return true;
+}
+```
+
+- 上面是判断是否有效的函数，即在那一行放入皇后是否可以
+
+```cpp
+void backtrace(vector<vector<int> >&board,int row){
+    if(row==n){//这里一定是n
+        res++;
+        return;
+    }
+    for(int i=0;i<n;i++){
+        if(!is_valid(board,row,col)){
+            continue;
+        }
+        board[row][col]=1;
+        backtrace(board,row,col);
+        board[row][col]=0;
+    }
+}
+```
+
 ### 2.2走迷宫问题
 
 #### 走迷宫
