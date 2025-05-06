@@ -1416,3 +1416,18 @@ int mulknapsack(int n,int k,vector<int>&w,vector<int>&v,vector<int>&s){
     return dp[n][c];
 }
 ```
+
+### 最长递增子序列
+
+- 从数组中找子序列使的最长
+
+```cpp
+vector<int>dp(N,1);//子问题:以i为结尾的最长子序列
+for(int i=0;i<N;i++){
+    for(int j=0;j<i;j++){
+        if(Ti[i]>Ti[j]){
+            dp[i]=max(dp[i],dp[j]+1);//看此时已有的长度和前面某一个的长度加一谁大
+        }
+    }
+}
+```
