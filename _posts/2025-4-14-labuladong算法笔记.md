@@ -819,6 +819,40 @@ int main() {
 
 # 二、算法
 
+## 排序算法(分而治之)
+
+### 归并排序
+
+- 中间过程会有逆序对的数量，为左边部分的逆序对的数量加上右边部分，再加上跨越中间部分的
+
+```cpp
+void merge(vector<int>&arr,int left,int right,int mid){
+    int i=left,j=mid+1,k=0;
+    vector<int>temp(right-left+1);
+    while(i<=mid&&j<=right){
+        if(arr[i]<arr[j]){
+            temp[k++]=arr[i++];
+        }else{
+            inv_count+=mid-i+1;//从i开始到mid都会形成逆序对
+            temp[k++]=arr[j++];
+        }
+    }
+    while(i<=mid)temp[k++]=arr[i++];
+    while(j<=right)temp[k++]=arr[j++];
+    //将排好序的数组复制回原数组
+    for(int i=left,k=0;i<=right;i++,k++){
+        arr[i]=temp[k];
+    }
+}
+void mergesort(vector<int>&arr,int left,int right){
+    if(left>=right)return;
+    int mid=left+(right-left)/2;
+    mergesort(arr,left,mid);
+    mergesort(arr,mid+1,right);
+    merge(arr,left,right,mid);
+}
+```
+
 ## 2.1、DFS(深搜/回溯)
 
 - 从图或树的某个起始节点开始，沿着一条路径尽可能深地探索下去，直到不能再继续深入或者达到目标节点，然后回溯到上一个节点，继续探索其他未被访问的分支路径，直到遍历完所有节点或者找到目标节点为止。
