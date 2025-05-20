@@ -1391,6 +1391,54 @@ int main()
 }
 ```
 
+### 拓扑排序
+
+- 一个有向无环图，将所有的顶点排成一个序列，使得在这个序列中，每条有向边的两个顶点，<u,v>u一定在v的前面
+
+- 拓扑排序通常基于顶点的入度（即指向该顶点的边的数量）来实现，常见的实现方法是 Kahn 算法，步骤如下：计算入度：遍历图中的所有边，统计每个顶点的入度。初始化队列：将所有入度为 0 的顶点加入一个队列。入度为 0 意味着该顶点没有前置依赖，可以先进行处理。拓扑排序过程：从队列中取出一个顶点，将其加入拓扑排序的结果序列中。遍历该顶点的所有出边，将这些出边所指向的顶点的入度减 1。如果某个顶点的入度减为 0，则将其加入队列。
+- 重复步骤 3：直到队列为空
+
+```cpp
+int main(){
+    int N,M;
+    cin>>N>>M;
+    vector<vector<int> >Graph(N+1);
+    vector<int>in_degree(N+1,0);
+    for(int i=0;i<M;i++){
+        int u,v;
+        cin>>u>>v;
+        Graph[u].push_back(v);
+        in_degree[v]++;
+    }
+    queue<int>Q;
+    vector<int>dp(N+1,1);//以这个点为终点最多的景点
+    for(int i=1;i<=N;i++){
+        if(!in_degree[i]){
+            Q.push(i);
+        }
+    }
+    while(!Q.empty()){
+        int node=Q.front();
+        Q.pop();
+        for(int i=0;i<Graph[node].size();i++){
+            dp[Graph[node][i]]=max(dp[Graph[node][i]],dp[node]+1);
+            in_degree[Graph[node][i]]--;
+            if(!in_degree[Graph[node][i]]){
+                Q.push(Graph[node][i]);
+            }
+        }
+        //还有一种写法
+        for(int neighbor:Graph[node]){
+            dp[neighbor]=max();
+            in_degree[neighbor]--;
+            if(!in_degree[neighbor]){
+                Q.push(neighbor);
+            }
+        }
+    }
+}
+```
+
 ## 动态规划
 
 ### 0-1背包问题
