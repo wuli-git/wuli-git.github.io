@@ -49,7 +49,7 @@ tags: TeXt
 ## 1.vector
 
 ```cpp
-#include <vecctor>
+#include <vector>
 vector<int>a;
 vector<int>a(n,0);
 vector<vector<int> >b;
@@ -94,7 +94,9 @@ Q.size();
 
 ```
 
-## 4.unordered_set()()(哈希集合，后文有更详细介绍)
+## 4.unordered_set(哈希集合，后文有更详细介绍)
+
+## unordered_map;
 
 ```cpp
 #include <unordered_set>
@@ -109,6 +111,7 @@ Table.find(e);
 Table.empty();
 Table.size();
 Table.clear();
+unordered_map<string, int> umap;
 
 for(auto &x: Table)cout<<x<<endl;
 ```
@@ -380,6 +383,84 @@ private:
     }
 };
 ```
+
+##### 二叉树遍历
+
+
+```cpp
+//递归遍历
+class TreeNode{
+public:
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x):val(x),left(nullptr),right(nullptr){}
+    void traverse(TreeNode* root){
+        if(root==nullpptr){
+            return;
+        }
+    traverse(root->left);
+    traverse(root->right);
+    }
+};
+//BFS层序遍历
+void levelordertraverse(TreeNode* root){
+    if(root==nullptr)return;
+    std::queue<TreeNode> q;
+    q.push(root);
+    while(!q.empty()){
+        TreeNode* cur=q.front();
+        q.pop();
+        std::cout<<cur->val<<endl;
+        if(cur->left)
+        q.push(cur->left);
+        q.push(cur->right);
+    }
+}
+//若是想知道层数
+int depth=1;
+while(!q.empty()){
+    int sz=q.size();
+    for(int i=0;i<sz;i++){
+        TreeNode* cur=q.front();
+        q.pop();
+        std::cout<<"depth="<<depth<<cur->val<<std::endl;
+        if(cur->left!=nullptr){
+            q.push(cur->left);
+        }
+        if(cur->right!=nullptr){
+            q.push(cur->right);
+        }
+    }
+    depth++;
+}
+//多叉树
+class State{
+public:
+    Node* root;
+    int Depth;
+    State(Node* root,int depth):root(root),Depth(depth){};
+}
+    void levelOrderBFStraverse(Node *root){
+        if(root==nullptr){
+            return;
+        }
+        std::queue<State> q;
+        q.push(State(root,1));
+        while(!q.empty()){
+            State state=q.front();
+            q.pop();
+            std::cout<<state.root->val<<state.Depth<<std::endl;
+            for(Node* child:state.root->child){
+                q.push(Stade(child,depth++))
+            }
+        }
+    }
+```
+
+- 红黑树是一个可以自平衡的二叉搜索树
+
+- Trie/字典树/前缀树是以字符串为键，然后可以根据字符串的前缀找到值的树
 
 ##### 哈希函数
 
@@ -1223,6 +1304,43 @@ int main()
 }
 ```
 
+### 图的深搜DFS
+
+```cpp
+int visited[V_NUM];
+int G[V_NUM][V_NUM];
+void DFS(int **G,int v){
+    visit(v);
+    visited[v]=true;
+    for(int i=0;i<V_NUM;i++){
+        if(G[v][i]==1&&visited[i]==false){
+            DFS(G,i);
+        }
+    }
+}
+``` 
+
+### 图的广搜
+
+```cpp
+bool visited[V_NUM];
+int G[V_NUM][V_NUM];
+void BFS(int **G,int v){
+    visited(v);
+    visited(v)=true;
+    Enqueue(Q,v);
+    while(!isEmpty(Q)){
+        Dequeue(Q,v);
+        for(int i=0;i<V_NUM;i++){
+            if(G[v][i]==1&&visited[i]==false){
+                visit(i);
+                visited[i]=true;
+                Enqueue(Q,i);                    
+            }
+        }
+    }
+}
+```
 ### 求最短路径
 
 - 问题描述:给定一个n个点m条边的有向图，图中可能存在重边和自环，所有边权均为正值。
