@@ -72,6 +72,8 @@ need downnode git bush
 
 -  _posts文件夹不能搞错了，必须要在myblog的文件下的posts文件修改，否则将出现
 
+- 修改格式为![alt text](image.png)
+
 ```git
 $ git commit -m "shangchuan"
 On branch master
