@@ -1,7 +1,6 @@
 ---
 tags: TeXt
 title: Codex做一个桌宠使用体验
-mathjax: true
 ---
 
 # 基于Hatch Pet的桌宠生成流程文档
@@ -220,4 +219,9 @@ pet/
 桌宠最终效果如下：
 
 ![alt text](image-2.png)
+
+If you like TeXt, don't forget to give me a star. :star2:
+
+[![Star This Project](https://img.shields.io/github/stars/kitian616/jekyll-TeXt-theme.svg?label=Stars&style=social)](https://github.com/kitian616/jekyll-TeXt-theme/)
+
 
