@@ -215,6 +215,9 @@ pet/
 
 - 总体体验下来,codex这个agent还是很强大的，就像一个人，可以为你做事情，调用你的电脑与大模型不同（是一个脑子，只能思考）
 
+## 效果
+![alt text](image-3.png)
+
 
 If you like TeXt, don't forget to give me a star. :star2:
 
