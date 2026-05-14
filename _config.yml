@@ -1,78 +1,77 @@
-# Welcome to Jekyll!
-# Jekyll Text Theme 博客全局配置
-# 适配仓库：wui-git / wuli-git.fulloon.io
-# 访问地址：https://wui-git.github.io/wuli-git.fulloon.io/
+# Jekyll Text Theme 博客配置
+# 仓库：wui-git / fox-lulloon.io
+# 访问：https://wui-git.github.io/fox-lulloon.io/
 
-## 站点基础设置
+## 站点基础
 text_skin: forest
 highlight_theme: default
 
 url     : https://wui-git.github.io
-baseurl : /wuli-git.fulloon.io
+baseurl : /fox-lulloon.io
 
-title   : 诗意人间 | 浪漫自律小栈
+title   : Fox 诗意小筑
 description: >
-  以文字栖居，做一个诗意温柔、自律向上的人。
+  心有山海，静而不争；以文为友，自律生长。
 
 ## 语言与时区
 lang: zh-CN
 timezone: Asia/Shanghai
 
-## 作者信息 & 社交链接
+## 作者信息 侧边栏展示
 author:
   type      : person
-  name      : wuli
+  name      : Wuli·Fox
   avatar    : /assets/头像.png
-  bio       : 心怀诗意，自律自愈，慢慢发光。
+  bio       : 热爱自由，偏爱浪漫，永远保持清醒与温柔。
   email     :
   github    : wui-git
   weibo     :
   zhihu     :
 
-## GitHub 仓库关联
-repository: wui-git/wuli-git.fulloon.io
+## 仓库关联
+repository: wui-git/fox-lulloon.io
 repository_tree: master
 
-## 页面路径配置
+## 路径
 paths:
   root    : /
   home    : /
   archive : /archive.html
   rss     : /feed.xml
 
-## 文章全局设置
+## 文章设置
 excerpt_separator: <!--more-->
 license: CC-BY-NC-4.0
 
 toc:
   selectors: h1,h2,h3
 
-## 拓展功能：公式 / 流程图 / 图表
+## 高级功能开启
 mathjax: true
 mathjax_autoNumber: true
 mermaid: true
 chart: true
 
-## 分页设置
+## 分页
 paginate: 6
 paginate_path: /page:num
 
 ## 资源源
 sources: bootcdn
 
-## 分享功能
+## 分享
 sharing:
   provider: addtoany
 
-## 评论系统 Valine
+## 评论美化
 comments:
   provider: valine
   valine:
     app_id      : Favohrffq0ZtxDphpXUChnqd-gzGzoHsz
     app_key     : UYaxXCIA2w4u0bNHJGboO4nn
-    placeholder : 留下一句感想，不负遇见～
+    placeholder : 山河辽阔，有幸相逢，留一句心事～
 
-## 文章阅读量统计
+## 阅读量
 pageview:
   provider: leancloud
   leancloud:
@@ -80,15 +79,15 @@ pageview:
     app_key   : UYaxXCIA2w4u0bNHJGboO4nn
     app_class : test
 
-## 站内搜索
+## 搜索
 search:
   provider: default
 
-## 统计分析
+## 统计
 analytics:
   provider: false
 
-## 编译构建规则
+## 编译规则
 markdown    : kramdown
 highlighter : rouge
 permalink   : date
@@ -123,7 +122,7 @@ defaults:
       show_edit_on_github: true
       pageview: true
 
-## 插件依赖
+## 插件
 plugins:
   - jekyll-feed
   - jekyll-paginate
