@@ -1,40 +1,38 @@
-# Jekyll Text Theme 全站美化配置
+# Jekyll Text Theme 博客配置
 # 仓库：wui-git / fox-lulloon.io
 # 访问：https://wui-git.github.io/fox-lulloon.io/
 
-## 站点外观
+## 站点基础
 text_skin: forest
 highlight_theme: default
 
-## 网站域名 & 根路径
 url     : https://wui-git.github.io
 baseurl : /fox-lulloon.io
 
-## 首页标题 & 文艺标语
-title   : 狐狸诗意小筑
+title   : Fox 诗意小筑
 description: >
-  山野自有风，人间自有诗。
+  心有山海，静而不争；以文为友，自律生长。
 
 ## 语言与时区
 lang: zh-CN
 timezone: Asia/Shanghai
 
-## 作者信息 + 侧边栏文艺简介
+## 作者信息 侧边栏展示
 author:
   type      : person
   name      : Wuli·Fox
   avatar    : /assets/头像.png
-  bio       : 温旧书，煮清茶，守一方诗意人间。
+  bio       : 热爱自由，偏爱浪漫，永远保持清醒与温柔。
   email     :
   github    : wui-git
   weibo     :
   zhihu     :
 
-## GitHub 仓库绑定
+## 仓库关联
 repository: wui-git/fox-lulloon.io
 repository_tree: master
 
-## 页面默认路径
+## 路径
 paths:
   root    : /
   home    : /
@@ -54,26 +52,26 @@ mathjax_autoNumber: true
 mermaid: true
 chart: true
 
-## 每页文章数
+## 分页
 paginate: 6
 paginate_path: /page:num
 
-## 静态资源源
+## 资源源
 sources: bootcdn
 
-## 文章分享
+## 分享
 sharing:
   provider: addtoany
 
-## Valine 评论美化
+## 评论美化
 comments:
   provider: valine
   valine:
     app_id      : Favohrffq0ZtxDphpXUChnqd-gzGzoHsz
     app_key     : UYaxXCIA2w4u0bNHJGboO4nn
-    placeholder : 山河辽阔，有幸相逢～
+    placeholder : 山河辽阔，有幸相逢，留一句心事～
 
-## 文章阅读量统计
+## 阅读量
 pageview:
   provider: leancloud
   leancloud:
@@ -81,20 +79,19 @@ pageview:
     app_key   : UYaxXCIA2w4u0bNHJGboO4nn
     app_class : test
 
-## 站内搜索
+## 搜索
 search:
   provider: default
 
-## 统计分析
+## 统计
 analytics:
   provider: false
 
-## 编译渲染规则
+## 编译规则
 markdown    : kramdown
 highlighter : rouge
 permalink   : date
 
-## 忽略打包文件
 exclude:
   - CHANGELOG.md
   - HOW_TO_RELEASE.md
@@ -125,7 +122,7 @@ defaults:
       show_edit_on_github: true
       pageview: true
 
-## 插件列表
+## 插件
 plugins:
   - jekyll-feed
   - jekyll-paginate
