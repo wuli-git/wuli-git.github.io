@@ -2,6 +2,7 @@
 layout: article
 title: Document - Writing Posts
 mathjax: true
+nav: docs-en
 ---
 
 # 基于Hatch Pet的桌宠生成流程文档
