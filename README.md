@@ -2,11 +2,11 @@
 title: gitpage 建站
 tags: TeXt
 ---
-### 1.1github presentation
+### 1.1 github presentation
 
 github code仓库，int上传，equal net 云盘，进行线上code管理
 
-### 1.2github pages
+### 1.2  github pages
 
 你可能有一些混淆，通常所说的是GitHub Pages，下面为你介绍并讲解如何用它来搭建个人博客网站。
 
