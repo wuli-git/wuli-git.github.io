@@ -1,8 +1,7 @@
 ---
-layout: article
-title: Document - Writing Posts
+tags: TeXt
+title: Codex做一个桌宠使用体验
 mathjax: true
-nav: docs-en
 ---
 
 # 基于Hatch Pet的桌宠生成流程文档
