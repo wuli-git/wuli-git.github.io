@@ -1,0 +1,17 @@
+wuli:
+  type: person
+  name: wuli
+  url: https://wuli-git.github.io
+  avatar: /assets/头像.png
+  bio: 做一个诗意，浪漫，自律的人.
+  email: 1328433750@qq.com
+  github: wuli-git
+  npm: http://106nixi213493.vicp.fun
+
+cc00mi:
+  type: person
+  name: cc00mi
+  url: https://github.com/cc00mi
+  avatar: /assets/cc00mi-avatar.png
+  bio: explore anything new!
+  github: cc00mi
