@@ -81,7 +81,7 @@ git push
 
    2. 在 `Build and deployment`部分，检查 `Source`选项：必须选择 `Deploy from a branch`。下面的 `Branch` 必须选 `gh-pages`，文件夹选 `/ (root)`。
 
-      ![gh-pages源分支](F:\wuli00\wuli-git.github.io\assets\images\src-img\20260517CICD.png)
+      ![gh-pages源分支](..\assets\images\src-img\20260517CICD.png)
 
 5. 查看 Actions → 显示绿色 ✅ 即为部署成功
 
@@ -109,17 +109,6 @@ ps: 在仓库右侧设置 Website
 - 进入仓库 Settings → Actions → General
 - 找到 Workflow permissions → 选择 Read and write permissions
 - 重新运行流水线
-
-3. 
-
-   ### 2. GitHub Pages 的「源分支」设置不对
-
-   即使 `gh-pages` 分支存在，也必须告诉 GitHub 从哪个分支拉取内容。
-
-   **检查方法：**
-
-   1. 
-   2. 保存设置，页面会提示「Your site is live at ...」，等 1-2 分钟再访问。
 
 3. 如何自动更新？
 
