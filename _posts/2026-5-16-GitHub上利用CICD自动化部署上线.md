@@ -4,8 +4,6 @@ tag: tips project
 author: cc00mi
 ---
 
-# GitHub上利用CI/CD自动化部署上线 
-
 ## 一、什么是 CI/CD 流水线？
 
 **CI（Continuous Integration 持续集成）**
@@ -81,7 +79,7 @@ git push
 
    2. 在 `Build and deployment`部分，检查 `Source`选项：必须选择 `Deploy from a branch`。下面的 `Branch` 必须选 `gh-pages`，文件夹选 `/ (root)`。
 
-      ![gh-pages源分支](..\assets\images\src-img\20260517CICD.png)
+      ![gh-pages源分支](/assets/images/src-img/20260517CICD.png)
 
 5. 查看 Actions → 显示绿色 ✅ 即为部署成功
 
