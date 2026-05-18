@@ -1,6 +1,6 @@
 ---
-title: GitHub上利用CI/CD自动化部署上线
-tag: tips project
+title: GitHub上利用CI/CD自动化部署上线静态网页
+tag: tips	project
 author: cc00mi
 ---
 
@@ -60,7 +60,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub 自动提供的密钥，不用改
           publish_dir: ./  # 要上线的文件夹：
-                           # ./ = 整个项目, 首页需命名为index.html
+                           # ./ = 普通静态网页项目
                            # ./dist = Vue/React 打包目录
                            # ./html = 网页目录（按需改）
 ```
