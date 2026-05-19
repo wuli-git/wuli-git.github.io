@@ -1,7 +1,7 @@
 ---
 title: Uni-app 项目如何用 GitHub CI/CD 自动部署到 GitHub Pages：完整 SOP、底层原理与避坑总结
 tag: tips  deploy CI/CD
-author: cc00mi fox
+author: cc00mi
 ---
 
 ## 一、写在前面
